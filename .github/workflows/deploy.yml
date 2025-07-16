@@ -51,4 +51,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         SSH_PRIVATE_KEY: ~/.ssh/ec2_key.pem
         ANSIBLE_HOST_KEY_CHECKING: false
-        
+    

@@ -39,4 +39,7 @@
     timeout: 300
     state: started
     host: "{{ instance_info.instances[0].public_ip_address }}"
-    
+
+- name: Show public IP
+  debug:
+    var: instance_info.instances[0].public_ip_address
