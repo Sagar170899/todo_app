@@ -7,7 +7,7 @@
   ansible.builtin.package:
     name:
       - apache2
-      - nginx
+      - git
     state: present
   when: ansible_os_family == "Debian"
 
@@ -19,10 +19,10 @@
     enabled: yes
   when: ansible_os_family == "Debian"
 
-- name: Start and enable nginx service
+- name: Start and enable git service
   become: yes
   ansible.builtin.systemd:
-    name: nginx
+    name: git
     state: started
     enabled: yes
 
