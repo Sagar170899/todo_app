@@ -20,7 +20,7 @@
     name: ansible-ec2-instance
     key_name: ${{ vars.ec2_key_name }}
     region: ${{ vars.aws_region }}
-    image: ${{ vars.ec2_ami }}
+    image_id: ${{ vars.ec2_ami }}
     instance_type: ${{ vars.ec2_instance_type }}
     count: 1
     security_groups: ${{ security_group.group_id }}
