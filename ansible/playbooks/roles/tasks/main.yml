@@ -23,7 +23,7 @@
     image: ${{ vars.ec2_ami }}
     instance_type: ${{ vars.ec2_instance_type }}
     count: 1
-    security_groups: [${{ security_group.group_id }}]
+    security_groups: ${{ security_group.group_id }}
   register: ec2_instance
 
 - name: Wait for the instance to be running
