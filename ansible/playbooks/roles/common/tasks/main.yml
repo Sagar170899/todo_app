@@ -1,0 +1,38 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for common
+- name: Install common packages
+  become: yes
+  packages:
+    name:
+      - httpd
+      - nodejs
+      - npm
+      - nginx
+    state: present
+
+- name: Start and enable httpd service
+  become: yes
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Start and enable nginx service
+  become: yes
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Copy the Source code
+  become: yes
+  synchronize:
+    src: "{{ playbook_dir }}/../../todo_app/"
+    dest: "/opt/todo_app/"
+    delete: true
+    recursive: yes
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=.github"
+      - "--exclude=.ansible"

@@ -2,6 +2,11 @@
 - name: Provision and Configure Server
   hosts: localhost
   gather_facts: no
-
   roles:
-    - roles
+    - ec2_launch
+
+- name: Configure EC2 Instance
+  hosts: launched_ec2_instances
+  gather_facts: yes
+  roles:
+    - common
