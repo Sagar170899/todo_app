@@ -1,0 +1,19 @@
+---
+- name: Provision and Configure Server
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Adding SSH & other port access to the security group
+      amazon.aws.ec2_group:
+        name: my-sec_grp-1
+        description: Security group for EC2 instances
+        region: eu-north-1
+        rules:
+          - proto: tcp
+            ports: [22, 80, 3000, 3001]
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      register: security_group
