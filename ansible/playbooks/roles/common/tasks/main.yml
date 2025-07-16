@@ -8,6 +8,9 @@
     name:
       - apache2
       - git
+      - nginx
+      - curl
+      - htop
     state: present
   when: ansible_os_family == "Debian"
 
@@ -19,12 +22,13 @@
     enabled: yes
   when: ansible_os_family == "Debian"
 
-- name: Start and enable git service
+- name: Start and enable nginx service
   become: yes
   ansible.builtin.systemd:
-    name: git
+    name: nginx
     state: started
     enabled: yes
+  when: ansible_os_family == "Debian"
 
 - name: Ensure rsync is installed (for synchronize module)
   become: yes
