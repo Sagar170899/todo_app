@@ -1,4 +1,4 @@
-#!/home/sagar/todo_app/ansible-venv/bin/python3
+#!/home/sagar/todo_app/ansible-venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
