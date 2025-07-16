@@ -29,11 +29,11 @@ jobs:
         aws-region: eu-north-1
 
     - name: Create SSH Key File
-      run: |
+      runs: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/ec2_key.pem
         chmod 600 ~/.ssh/ec2_key.pem
 
     - name: Debug SSH Key
-      run: |
+      runs: |
         ls -l ~/.ssh/ec2_key.pem
