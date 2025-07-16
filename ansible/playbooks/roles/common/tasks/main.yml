@@ -7,28 +7,38 @@
   ansible.builtin.package:
     name:
       - apache2
+      - nodejs
+      - python3-pip
       - npm
       - nginx
     state: present
+  when: ansible_os_family == "Debian"
 
 - name: Start and enable apache2 service
   become: yes
-  systemd:
+  ansible.builtin.systemd:
     name: apache2
     state: started
     enabled: yes
+  when: ansible_os_family == "Debian"
 
 - name: Start and enable nginx service
   become: yes
-  systemd:
+  ansible.builtin.systemd:
     name: nginx
     state: started
     enabled: yes
 
-- name: Copy the Source code
+- name: Ensure rsync is installed (for synchronize module)
+  become: yes
+  ansible.builtin.package:
+    name: rsync
+    state: present
+
+- name: Copy the source code
   become: yes
   ansible.builtin.synchronize:
-    src: "{{ playbook_dir }}/../../todo_app/"
+    src: "{{ playbook_dir }}/../../"
     dest: "/opt/todo_app/"
     delete: true
     recursive: yes
