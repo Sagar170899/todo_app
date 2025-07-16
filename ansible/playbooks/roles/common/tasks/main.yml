@@ -7,7 +7,6 @@
   ansible.builtin.package:
     name:
       - apache2
-      - python3-pip
       - nginx
     state: present
   when: ansible_os_family == "Debian"
