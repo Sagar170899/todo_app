@@ -1,11 +1,12 @@
-#SPDX-License-Identifier: MIT-0
+# SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles
+
 - name: Adding SSH & other port access to the security group
   amazon.aws.ec2_group:
     name: my-sec_grp-1
     description: Security group for EC2 instances
-    region: eu-north-1
+    region: "{{ aws_region }}"
     rules:
       - proto: tcp
         ports: [22, 80, 3000, 3001]
@@ -18,18 +19,21 @@
 - name: Launching EC2 instance
   amazon.aws.ec2_instance:
     name: ansible-ec2-instance
-    key_name: ${{ vars.ec2_key_name }}
-    region: ${{ vars.aws_region }}
-    image_id: ${{ vars.ec2_ami }}
-    instance_type: ${{ vars.ec2_instance_type }}
+    key_name: "{{ ec2_key_name }}"
+    region: "{{ aws_region }}"
+    image:
+      id: "{{ ec2_ami }}"
+    instance_type: "{{ ec2_instance_type }}"
     count: 1
-    security_groups: ${{ security_group.group_id }}
+    security_groups:
+      - "{{ security_group.group_id }}"
   register: ec2_instance
 
 - name: Wait for the instance to be running
   amazon.aws.ec2_instance_info:
-    region: ${{ vars.aws_region }}
-    instance_ids: ${{ ec2_instance.instance_ids[0] }}
+    region: "{{ aws_region }}"
+    instance_ids:
+      - "{{ ec2_instance.instance_ids[0] }}"
   register: instance_info
 
 - name: Wait for SSH to become available
@@ -43,3 +47,9 @@
 - name: Show public IP
   debug:
     var: instance_info.instances[0].public_ip_address
+
+- name: Add the instance to the Ansible inventory
+  ansible.builtin.add_host:
+    name: "{{ instance_info.instances[0].public_ip_address }}"
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: "{{ ec2_ssh_key_path }}"
