@@ -7,7 +7,6 @@
   ansible.builtin.package:
     name:
       - apache2
-      - nodejs
       - npm
       - nginx
     state: present
