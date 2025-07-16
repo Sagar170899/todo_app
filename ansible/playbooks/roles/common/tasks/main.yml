@@ -1,20 +1,21 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for common
+
 - name: Install common packages
   become: yes
-  packages:
+  ansible.builtin.package:
     name:
-      - httpd
+      - apache2
       - nodejs
       - npm
       - nginx
     state: present
 
-- name: Start and enable httpd service
+- name: Start and enable apache2 service
   become: yes
   systemd:
-    name: httpd
+    name: apache2
     state: started
     enabled: yes
 
@@ -27,7 +28,7 @@
 
 - name: Copy the Source code
   become: yes
-  synchronize:
+  ansible.builtin.synchronize:
     src: "{{ playbook_dir }}/../../todo_app/"
     dest: "/opt/todo_app/"
     delete: true
