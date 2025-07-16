@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles
+aws_region: "eu-north-1"
+ec2_instance_type: "t2.micro"
+ec2_ami: "ami-00186641bf4d010ee"  
+ec2_key_name: "ec2keypair"
+ec2_security_group: "ansible-ec2-sg"
