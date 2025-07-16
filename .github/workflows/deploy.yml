@@ -17,7 +17,7 @@ jobs:
     - name: Set up Python & Ansible
       runs: |
         sudo apt-get update
-        sudo apt-get install -y python3.x python3-pip
+        sudo apt-get install -y python3 python3-pip
         pip3 install --user ansible boto3 botocore
         ansible-galaxy collection install amazon.aws
 
